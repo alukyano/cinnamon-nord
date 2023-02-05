@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Exec=sh -c 'sleep 10 && glava --desktop'
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=glava-startup.desktop
+Name=Glava Audio Visualizer
+Comment[en_US]=Glava Audio Visualizer
+Comment=Glava Audio Visualizer
+X-GNOME-Autostart-Delay=10

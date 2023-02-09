@@ -1,34 +1,81 @@
-git clone https://github.com/vinceliuce/WhiteSur-gtk-theme.git
+
+#!/bin/bash
+
+# Check if Script is Run as Root
+if [[ $EUID -ne 0 ]]; then
+  echo "You must be a root user to run this script, please run sudo ./install.sh" 2>&1
+  exit 1
+fi
+
+username=$(id -u -n 1000)
+builddir=$(pwd)
+
+# Update packages list and update system
+apt update
+apt upgrade -y
+
+cd $builddir
 cd WhiteSur-gtk-theme
 ./install.sh --nord
+./tweak.sh -f monterey
 
-git clone https://github.com/alvatip/Nordzy-icon.git
-cd Nordzy-icon
+cd $builddir
+cd /Nordzy-icon
 ./install.sh --total
 
-
-git clone https://github.com/alvatip/Nordzy-cursors.git
+cd $builddir
 cd Nordzy-cursors
 ./install.sh
 
 
-#-- fonts.zip --> .local/share/fonts
-#-- wallpapers.zip --> .local/share/wallpapers
+git clone https://github.com/arcticicestudio/nord-gnome-terminal.git
+cd nord-gnome-terminal/src
+./nord.sh
 
-#dconf load /org/cinnamon/ < cinnamon-nord.conf
+cd $builddir
+mkdir -p /home/$username/.config
+mkdir -p /home/$username/.config/autostart
+mkdir -p /home/$username/.local/share/fonts
+mkdir -p /home/$username/.local/share/wallpapers
+mkdir -p /home/$username/.local/share/plank/themes
 
+# Installing fonts
+cd $builddir 
+apt-get install fonts-font-awesome -y
 
-sudo apt-get install plank
+unzip fonts.zip -d /home/$username/.local/share/fonts
 
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip
+unzip FiraCode.zip -d /home/$username/.local/share/fonts
 
-#-- plnak-theme.zip --> .local/share/plank/themes
-#set plank theme
-#add plank to startup with delay 5 sec
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Meslo.zip
+unzip Meslo.zip -d /home/$username/.local/share/fonts
+
+unzip wallpapers.zip -d /home/$username/.local/share/wallpapers
+
+# Reloading Font
+fc-cache -vf
+# Removing zip Files
+rm ./FiraCode.zip ./Meslo.zip
+
+dconf load /org/cinnamon/ < cinnamon-nord.conf
+
+#install conky
+apt-get install plank -y
+unzip plank-theme.zip -d /home/$username/.local/share/plank/themes
 
 
 #Install ulaucher.io
 
-sudo apt-get install conky-all jq curl moc
-#-- conky-config.zip --> .config/conky
+#install conky
+apt-get install conky-all jq curl moc -y
+unzip conky-config.zip -d /home/$username/.config
+​cp conky-startup.desktop to /home/$username/.config/autostart
 
-#add to /etc/environment  MUFFIN_NO_SHADOWS=1
+
+apt-get install nautilus nautilus-admin nautilus-extension-gnome-terminal
+
+echo MUFFIN_NO_SHADOWS=1 >> /etc/environment
+
+
+chown -R $username:$username /home/$username

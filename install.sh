@@ -45,15 +45,15 @@ mkdir -p /home/$username/.local/share/plank/themes
 cd $builddir 
 apt install fonts-font-awesome -y
 
-unzip fonts.zip -d -o /home/$username/.local/share/fonts
+unzip fonts.zip -do /home/$username/.local/share/fonts
 
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip
-unzip FiraCode.zip -d -o /home/$username/.local/share/fonts
+unzip FiraCode.zip -do /home/$username/.local/share/fonts
 
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Meslo.zip
-unzip Meslo.zip -d -o /home/$username/.local/share/fonts
+unzip Meslo.zip -do /home/$username/.local/share/fonts
 
-unzip wallpapers.zip -d -o /home/$username/.local/share/wallpapers
+unzip wallpapers.zip -do /home/$username/.local/share/wallpapers
 
 # Reloading Font
 fc-cache -vf
@@ -64,15 +64,21 @@ dconf load /org/cinnamon/ < cinnamon-nord.conf
 
 #install conky
 apt install plank -y
-unzip plank-theme.zip -d -o /home/$username/.local/share/plank/themes
+unzip plank-theme.zip -do /home/$username/.local/share/plank/themes
 
 
 #Install ulaucher.io
+cd $builddir 
+cd packages
+apt install ./ulauncher_5.15.1_all.deb
+cd $builddir
+unzip ulauncher-theme.zip -do /home/$username/.config/ulauncher/user-themes/
 
 #install conky
+cd $builddir 
 apt install conky-all jq curl moc -y
-unzip conky-config.zip -d -o /home/$username/.config
-​cp conky-startup.desktop to /home/$username/.config/autostart
+unzip conky-config.zip -do /home/$username/.config
+​cp conky-startup.desktop /home/$username/.config/autostart
 
 
 apt install nautilus nautilus-admin nautilus-extension-gnome-terminal

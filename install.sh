@@ -40,6 +40,7 @@ mkdir -p /home/$username/.config/autostart
 mkdir -p /home/$username/.local/share/fonts
 mkdir -p /home/$username/.local/share/wallpapers
 mkdir -p /home/$username/.local/share/plank/themes
+mkdir -p /home/$username/.config/ulauncher/user-themes/
 
 # Installing fonts
 cd $builddir 
@@ -70,7 +71,7 @@ unzip plank-theme.zip -do /home/$username/.local/share/plank/themes
 #Install ulaucher.io
 cd $builddir 
 cd packages
-apt install ./ulauncher_5.15.1_all.deb
+apt install ./ulauncher_5.15.1_all.deb -y
 cd $builddir
 unzip ulauncher-theme.zip -do /home/$username/.config/ulauncher/user-themes/
 

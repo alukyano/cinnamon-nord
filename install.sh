@@ -79,7 +79,7 @@ unzip ulauncher-theme.zip -do /home/$username/.config/ulauncher/user-themes/
 cd $builddir 
 apt install conky-all jq curl moc -y
 unzip conky-config.zip -do /home/$username/.config
-​cp conky-startup.desktop /home/$username/.config/autostart
+unzip autostart.zip -do  /home/$username/.config/autostart
 
 
 apt install nautilus nautilus-admin nautilus-extension-gnome-terminal

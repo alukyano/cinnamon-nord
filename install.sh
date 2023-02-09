@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 # Check if Script is Run as Root
@@ -16,21 +15,24 @@ apt upgrade -y
 
 cd $builddir
 cd WhiteSur-gtk-theme
-./install.sh --nord
-./tweak.sh -f monterey
+./install.sh --nord || exit
 
 cd $builddir
-cd /Nordzy-icon
-./install.sh --total
+cd WhiteSur-gtk-theme
+./tweaks.sh -f monterey || exit
+
+cd $builddir
+cd Nordzy-icon
+./install.sh --total || exit
 
 cd $builddir
 cd Nordzy-cursors
-./install.sh
+./install.sh || exit
 
-
+cd $builddir
 git clone https://github.com/arcticicestudio/nord-gnome-terminal.git
 cd nord-gnome-terminal/src
-./nord.sh
+./nord.sh || exit
 
 cd $builddir
 mkdir -p /home/$username/.config
@@ -41,17 +43,17 @@ mkdir -p /home/$username/.local/share/plank/themes
 
 # Installing fonts
 cd $builddir 
-apt-get install fonts-font-awesome -y
+apt install fonts-font-awesome -y
 
-unzip fonts.zip -d /home/$username/.local/share/fonts
+unzip fonts.zip -d -o /home/$username/.local/share/fonts
 
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip
-unzip FiraCode.zip -d /home/$username/.local/share/fonts
+unzip FiraCode.zip -d -o /home/$username/.local/share/fonts
 
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Meslo.zip
-unzip Meslo.zip -d /home/$username/.local/share/fonts
+unzip Meslo.zip -d -o /home/$username/.local/share/fonts
 
-unzip wallpapers.zip -d /home/$username/.local/share/wallpapers
+unzip wallpapers.zip -d -o /home/$username/.local/share/wallpapers
 
 # Reloading Font
 fc-cache -vf
@@ -61,19 +63,19 @@ rm ./FiraCode.zip ./Meslo.zip
 dconf load /org/cinnamon/ < cinnamon-nord.conf
 
 #install conky
-apt-get install plank -y
-unzip plank-theme.zip -d /home/$username/.local/share/plank/themes
+apt install plank -y
+unzip plank-theme.zip -d -o /home/$username/.local/share/plank/themes
 
 
 #Install ulaucher.io
 
 #install conky
-apt-get install conky-all jq curl moc -y
-unzip conky-config.zip -d /home/$username/.config
+apt install conky-all jq curl moc -y
+unzip conky-config.zip -d -o /home/$username/.config
 ​cp conky-startup.desktop to /home/$username/.config/autostart
 
 
-apt-get install nautilus nautilus-admin nautilus-extension-gnome-terminal
+apt install nautilus nautilus-admin nautilus-extension-gnome-terminal
 
 echo MUFFIN_NO_SHADOWS=1 >> /etc/environment
 
